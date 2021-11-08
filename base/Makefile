@@ -7,10 +7,10 @@ main.yaml: clean/main.yaml
 	kustomize build clean >$@
 
 clean/main.yaml: clean/values.yaml
-	-helm repo add external-secrets https://external-secrets.github.io/kubernetes-external-secrets/
+	-helm repo add kong https://charts.konghq.com
 	helm repo update
-	helm template external-secrets external-secrets/kubernetes-external-secrets \
-		--version 8.3.0 --namespace=external-secrets --values=clean/values.yaml --include-crds --kube-version 1.21 >$@
+	helm template kong kong/kong \
+		--version 2.5.0 --namespace=kong --values=clean/values.yaml --include-crds --kube-version 1.21 >$@
 
 .PHONY: clean
 clean:
